@@ -1,0 +1,25 @@
+set $use_raw_food r
+set $flame_coordinats 277, 189
+set $kindling_heap_coordinats 295, 176
+set $drag_kindling_to 275, 199
+set #drag_amount 1
+set #fire_up_tries 5
+set #cooking_delay 1600
+
+while 1 = 1
+ send $use_raw_food
+ while target
+  left $flame_coordinats 
+ end_while
+ if lastmsg fire
+  gosub no_fire
+ end_if
+ wait #cooking_delay
+end_while
+
+:no_fire
+ drag $kindling_heap_coordinats $drag_kindling_to #drag_amount
+ repeat #fire_up_tries 
+  double_left $drag_kindling_to 
+ end_repeat
+return
