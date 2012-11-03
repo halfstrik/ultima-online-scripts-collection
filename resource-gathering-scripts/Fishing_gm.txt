@@ -1,0 +1,103 @@
+set $warning_message you see:
+
+set $expected_message1 sandra
+set $expected_message2 feather
+set $expected_message3 raftman
+
+set $expected_monster1 skelet
+set $expected_monster2 serpent
+set $expected_monster3 elemental
+set $expected_monster4 walrus
+
+set #fishing_movment_script 2
+
+set #known_target_id1 93968
+set #known_target_id2 26148819
+
+set #fighting_time 30000
+set #applay_bandage_delay 2700
+set #gh_scroll_cast_delay 2000
+set #cast_protection_delay 2000
+set #cast_bless_delay 2000
+
+set $equip_wep_shield f7
+set $next_target f5
+
+set $attack_last f6
+
+set $bandage_self f7
+set $bandage_friend f8
+
+set $dring_gh_potion f10
+set $use_gh_scroll_self r
+set $cast_protection_self e
+set $cast_bless_wepon f4
+
+set #lower_hits_treashold 51
+
+while 1 = 1
+
+  if lastmsg $warning_message
+    if_not (lastmsg $expected_message1) or (lastmsg $expected_message2) or (lastmsg $expected_message3)
+      if (lastmsg $expected_monster1) or (lastmsg $expected_monster2) or (lastmsg $expected_monster3) or (lastmsg $expected_monster4)
+        gosub fight
+      else
+         if lastmsg $warning_message
+          gosub gm_alarm
+        end_if
+      end_if
+    end_if
+  end_if
+  if hits < str
+    gosub fight
+  end_if
+
+end_while
+
+:fight
+  pause_script #fishing_movment_script
+  
+  say Stop
+
+  send $cast_protection_self #cast_protection_delay
+
+  send $equip_wep_shield 100
+  send $next_target 200
+  while (LastTargetID == #known_target_id1) or (LastTargetID == #known_target_id2)
+    send $next_target 200
+  end_while
+  set timer
+  while timer < #fighting_time
+    send $attack_last
+    if hits < str
+      if hits < #lower_hits_treashold
+        send $dring_gh_potion
+      end_if
+      if hits < #lower_hits_treashold
+        send $use_gh_scroll_self #gh_scroll_cast_delay
+      end_if
+      set timer
+      send $bandage_self #applay_bandage_delay
+    else
+      send $bandage_friend 100
+      if lastmsg wounded
+        set timer
+        wait #applay_bandage_delay
+      end_if
+    end_if
+  end_while
+  send $cast_bless_wepon #cast_bless_delay
+  
+  resume_script #fishing_movment_script
+return
+
+:gm_alarm
+  say stop
+  pause_script #fishing_movment_script
+  alarm
+  wait 10000
+  alarm
+  pause_script
+  resume_script #fishing_movment_script
+return
+

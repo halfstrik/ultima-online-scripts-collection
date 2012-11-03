@@ -1,0 +1,59 @@
+set #bottom_east_border_x 3170
+set #right_north_border_y 231
+set #top_west_border_x 3130 
+set #left_border_y 290
+
+set #time_raft_moves_one_tail 1000
+
+set %fishing_keys[1] z
+set %fishing_keys[2] x
+set %fishing_keys[3] c
+set %fishing_keys[4] v
+set %fishing_keys[5] b
+set %fishing_keys[6] n
+
+set #fishing_delay 2000
+
+while 1 = 1
+
+  while charposy < #left_border_y
+    say Forward
+    wait #time_raft_moves_one_tail
+    say Stop
+    gosub do_fishing
+  end_while
+
+  while charposx > #top_west_border_x 
+    say Right
+    wait #time_raft_moves_one_tail
+    say Stop
+    gosub do_fishing
+  end_while
+ 
+  while charposy > #right_north_border_y
+    say Back
+    wait #time_raft_moves_one_tail
+    say Stop
+    gosub do_fishing
+  end_while
+ 
+  while charposx < #bottom_east_border_x
+    say Left
+    wait #time_raft_moves_one_tail
+    say Stop 
+    gosub do_fishing
+  end_while
+
+end_while
+ 
+:do_fishing
+  repeat 2
+    for #i 1 6
+      send %fishing_keys[#i]
+      while_not lastmsg no fish here
+        wait #fishing_delay
+        send %fishing_keys[#i]
+      end_while
+    end_for
+  end_repeat
+return
