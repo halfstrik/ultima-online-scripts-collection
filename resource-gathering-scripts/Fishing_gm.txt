@@ -67,25 +67,19 @@ end_while
   gosub try_target_monster  
   set timer
   while timer < #fighting_time
-    
     if_not (LastTargetID == #known_target_id1) or (LastTargetID == #known_target_id2)
       send $attack_last
     end_if
-    if hits < str
-      if hits < #lower_hits_treashold
-        send $dring_gh_potion
-      end_if
-      if hits < #lower_hits_treashold
-        send $use_gh_scroll_self #gh_scroll_cast_delay
-      end_if
+    if hits < #lower_hits_treashold
+      send $dring_gh_potion
       set timer
+    end_if
+    if hits < #lower_hits_treashold
+      send $use_gh_scroll_self #gh_scroll_cast_delay
+      set timer
+    end_if
+    if (hits < str) and (hits > #lower_hits_treashold)
       send $bandage_self #applay_bandage_delay
-    else
-      send $bandage_friend 100
-      if lastmsg wounded
-        set timer
-        wait #applay_bandage_delay
-      end_if
     end_if
   end_while
   send $cast_bless_wepon #cast_bless_delay
