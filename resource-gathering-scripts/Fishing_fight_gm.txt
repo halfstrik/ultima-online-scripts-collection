@@ -1,4 +1,4 @@
-set $warning_message you see:
+set $warning_message you see
 
 set $expected_message1 sandra
 set $expected_message2 feather
@@ -8,6 +8,8 @@ set $expected_monster1 skelet
 set $expected_monster2 serpent
 set $expected_monster3 elemental
 set $expected_monster4 walrus
+
+set $message_during_fight1 attacking
 
 set #fishing_movment_script 2
 
@@ -40,7 +42,7 @@ while 1 = 1
 
   if lastmsg $warning_message
     if_not (lastmsg $expected_message1) or (lastmsg $expected_message2) or (lastmsg $expected_message3)
-      if (lastmsg $expected_monster1) or (lastmsg $expected_monster2) or (lastmsg $expected_monster3) or (lastmsg $expected_monster4)
+      if (lastmsg $expected_monster1) or (lastmsg $expected_monster2) or (lastmsg $expected_monster3) or (lastmsg $expected_monster4) or (lastmsg $message_during_fight1)
         gosub fight
       else
          if lastmsg $warning_message
@@ -78,8 +80,12 @@ end_while
       send $use_gh_scroll_self #gh_scroll_cast_delay
       set timer
     end_if
-    if (hits < str) and (hits > #lower_hits_treashold)
+    if hits < str
       send $bandage_self #applay_bandage_delay
+      set timer
+    end_if
+    if lastmsg  $message_during_fight1
+      set timer
     end_if
   end_while
   send $cast_bless_wepon #cast_bless_delay
@@ -98,11 +104,10 @@ return
 return
 
 :try_target_monster
-  set #i 0
+  set timer
   send $next_target 200
-  while (LastTargetID == #known_target_id1) or (LastTargetID == #known_target_id2) and (#i < 10)
+  while (LastTargetID == #known_target_id1) or (LastTargetID == #known_target_id2) and (timer < 10000)
     send $next_target 200
-    set #i #i + 1
   end_while
 return
 
