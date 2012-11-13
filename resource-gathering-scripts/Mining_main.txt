@@ -1,0 +1,368 @@
+set $step_north w  // --y
+set $step_south a  // ++y
+set $step_west q   // --x
+set $step_east s    // ++x
+
+set $meditation f12
+set $reflection f11
+
+set $tracking f4
+set $digging f1
+set $polimorph f3
+
+set $rune_to_home f10
+set $scroll_to_home f9
+
+set $wait_scroll_recall 2000
+
+set $wait_book_recall 3200
+set $wait_book_reflacrion 3600
+set $wait_book_polimorph 3800
+
+set $reflaction_duration 150000 //approximate mirror duration
+
+set $wait_meditation 2200 
+
+set #base_x 3203//base rune coordinates
+set #base_y 239
+
+set %runes[ 1 ] 1 // Trinsic hidden mine
+set %nextX [ 1 1 ] 1662 //1
+set %nextY [ 1 1 ] 2932
+set %nextX [ 1 2 ] 1656 //2
+set %nextY [ 1 2 ] 2932
+set %nextX [ 1 3 ] 1656 //3
+set %nextY [ 1 3 ] 2927
+set %nextX [ 1 4 ] 1653 //4
+set %nextY [ 1 4 ] 2927
+set %nextX [ 1 5 ] 1653 //5
+set %nextY [ 1 5 ] 2922
+set %nextX [ 1 6 ] 1653 //6
+set %nextY [ 1 6 ] 2916
+set %nextX [ 1 7 ] 1650 //7
+set %nextY [ 1 7 ] 2916
+set %nextX [ 1 8 ] 1650 //8
+set %nextY [ 1 8 ] 2911
+set %nextX [ 1 9 ] 1648 //9
+set %nextY [ 1 9 ] 2911
+set %nextX [ 1 10 ] 1648 //10
+set %nextY [ 1 10 ] 2906
+set %nextX [ 1 11 ] 1648 //11
+set %nextY [ 1 11 ] 2902
+set %nextX [ 1 12 ] 1646 //12
+set %nextY [ 1 12 ] 2902
+set %nextX [ 1 13 ] 1646 //13
+set %nextY [ 1 13 ] 2898
+set %nextX [ 1 14 ] 1648 //14
+set %nextY [ 1 14 ] 2898
+set %nextX [ 1 15 ] 1648 //15
+set %nextY [ 1 15 ] 2893
+set %nextX [ 1 16 ] stop
+set %runes[ 2 ] 2 // Avara dual mine
+set %nextX [ 2 1 ] 4814 //1
+set %nextY [ 2 1 ] 3661
+set %nextX [ 2 2 ] 4811 //2
+set %nextY [ 2 2 ] 3661
+set %nextX [ 2 3 ] 4811 //3
+set %nextY [ 2 3 ] 3652
+set %nextX [ 2 4 ] 4810 //4
+set %nextY [ 2 4 ] 3652
+set %nextX [ 2 5 ] 4810 //5
+set %nextY [ 2 5 ] 3647
+set %nextX [ 2 6 ] 4809 //6
+set %nextY [ 2 6 ] 3640
+set %nextX [ 2 7 ] stop
+set %runes[ 3 ] 3 // Avara little mine lone mountine
+set %nextX [ 3 1 ] 4551 //1
+set %nextY [ 3 1 ] 3172
+set %nextX [ 3 2 ] 4547 //2
+set %nextY [ 3 2 ] 3172
+set %nextX [ 3 3 ] 4547 //3
+set %nextY [ 3 3 ] 3167
+set %nextX [ 3 4 ] stop
+set %runes[ 4 ] 4 // Avara big mine lone mountine
+set %nextX [ 4 1 ] 4592 //1
+set %nextY [ 4 1 ] 3299
+set %nextX [ 4 2 ] 4589 //2
+set %nextY [ 4 2 ] 3299
+set %nextX [ 4 3 ] 4589 //3
+set %nextY [ 4 3 ] 3295
+set %nextX [ 4 4 ] 4589 //4
+set %nextY [ 4 4 ] 3291
+set %nextX [ 4 5 ] 4589 //5
+set %nextY [ 4 5 ] 3287
+set %nextX [ 4 6 ] 4589 //6
+set %nextY [ 4 6 ] 3282
+set %nextX [ 4 7 ] stop
+set %runes[ 5 ] 5 // Avara little mine main mountain
+set %nextX [ 5 1 ] 4773 //1
+set %nextY [ 5 1 ] 3770
+set %nextX [ 5 2 ] 4763 //2
+set %nextY [ 5 2 ] 3770
+set %nextX [ 5 3 ] 4763 //3
+set %nextY [ 5 3 ] 3766
+set %nextX [ 5 4 ] 4761 //4
+set %nextY [ 5 4 ] 3766
+set %nextX [ 5 5 ] 4761 //5
+set %nextY [ 5 5 ] 3762
+set %nextX [ 5 6 ] stop
+set %runes[ 6 ] 6 // British mountain back mine
+set %nextX [ 6 1 ] 997 //1
+set %nextY [ 6 1 ] 1599
+set %nextX [ 6 2 ] 997 //2
+set %nextY [ 6 2 ] 1595
+set %nextX [ 6 3 ] 997 //3
+set %nextY [ 6 3 ] 1591
+set %nextX [ 6 4 ] 997 //4
+set %nextY [ 6 4 ] 1586
+set %nextX [ 6 5 ] 994 //5
+set %nextY [ 6 5 ] 1586
+set %nextX [ 6 6 ] 994 //6
+set %nextY [ 6 6 ] 1581
+set %nextX [ 6 7 ] 994  //7
+set %nextY [ 6 7 ] 1578
+set %nextX [ 6 8 ] 1001  //8
+set %nextY [ 6 8 ] 1578
+set %nextX [ 6 9 ] 1002  //9
+set %nextY [ 6 9 ] 1581
+set %nextX [ 6 10 ] 1002  //10
+set %nextY [ 6 10 ] 1586
+set %nextX [ 6 11 ] 1008  //11
+set %nextY [ 6 11 ] 1586
+set %nextX [ 6 12 ] 1008  //12
+set %nextY [ 6 12 ] 1592
+set %nextX [ 6 13 ] stop
+set %runes[ 7 ] 7 // Shame bottom mine  
+set %nextX [ 7 1 ] 773
+set %nextY [ 7 1 ] 1693
+set %nextX [ 7 2 ] 772
+set %nextY [ 7 2 ] 1689
+set %nextX [ 7 3 ] 772
+set %nextY [ 7 3 ] 1685
+set %nextX [ 7 4 ] 771
+set %nextY [ 7 4 ] 1681
+set %nextX [ 7 5 ] 771
+set %nextY [ 7 5 ] 1676
+set %nextX [ 7 6 ] 775
+set %nextY [ 7 6 ] 1675
+set %nextX [ 7 7 ] 778
+set %nextY [ 7 7 ] 1675
+set %nextX [ 7 8 ] 778
+set %nextY [ 7 8 ] 1680
+set %nextX [ 7 9 ] 781
+set %nextY [ 7 9 ] 1680
+set %nextX [ 7 10 ] stop
+set %runes[ 8 ] 8 // Dest back mine  
+set %nextX [ 8 1 ] 1498
+set %nextY [ 8 1 ] 2830
+set %nextX [ 8 2 ] 1494
+set %nextY [ 8 2 ] 2830
+set %nextX [ 8 3 ] 1494
+set %nextY [ 8 3 ] 2835
+set %nextX [ 8 4 ] 1494
+set %nextY [ 8 4 ] 2840
+set %nextX [ 8 5 ] 1495
+set %nextY [ 8 5 ] 2842
+set %nextX [ 8 6 ] 1495
+set %nextY [ 8 6 ] 2846
+set %nextX [ 8 7 ] 1493
+set %nextY [ 8 7 ] 2846
+set %nextX [ 8 8 ] 1493
+set %nextY [ 8 8 ] 2850
+set %nextX [ 8 9 ] 1491
+set %nextY [ 8 9 ] 2851
+set %nextX [ 8 10 ] stop
+set %runes[ 9 ] 9 // Dest very bottom mine
+set %nextX [ 9 1 ] 1430 
+set %nextY [ 9 1 ] 2914
+set %nextX [ 9 2 ] 1427
+set %nextY [ 9 2 ] 2903
+set %nextX [ 9 3 ] 1420
+set %nextY [ 9 3 ] 2894
+set %nextX [ 9 4 ] 1420
+set %nextY [ 9 4 ] 2891
+set %nextX [ 9 5 ] 1423
+set %nextY [ 9 5 ] 2891
+set %nextX [ 9 6 ] 1423
+set %nextY [ 9 6 ] 2888
+set %nextX [ 9 7 ] 1426
+set %nextY [ 9 7 ] 2888
+set %nextX [ 9 8 ] 1426
+set %nextY [ 9 8 ] 2883
+set %nextX [ 9 9 ] 1426
+set %nextY [ 9 9 ] 2880
+set %nextX [ 9 10 ] 1422
+set %nextY [ 9 10 ] 2883
+set %nextX [ 9 11 ] 1420
+set %nextY [ 9 11 ] 2885
+set %nextX [ 9 12 ] stop
+set %runes[ 10 ] 0 // Dest not very bottom mine
+set %nextX [ 10 1 ] 1367
+set %nextY [ 10 1 ]  2728
+set %nextX [ 10 2 ] 1367
+set %nextY [ 10 2 ]  2724
+set %nextX [ 10 3 ] 1367
+set %nextY [ 10 3 ]  2719
+set %nextX [ 10 4 ] 1370
+set %nextY [ 10 4 ] 2719
+set %nextX [ 10 5 ] 1370
+set %nextY [ 10 5 ] 2717
+set %nextX [ 10 6 ] 1372
+set %nextY [ 10 6 ] 2717
+set %nextX [ 10 7 ] 1372
+set %nextY [ 10 7 ] 2712
+set %nextX [ 10 8 ] 1370
+set %nextY [ 10 8 ] 2710
+set %nextX [ 10 9 ] 1365
+set %nextY [ 10 9 ] 2710
+set %nextX [ 10 10 ] stop
+
+start_script 1
+set #starting 1
+gosub to_base
+
+if name = Feather
+    set #bottomborder 1
+    set #upperborder 5
+end_if
+if name = Sandra
+    set #bottomborder 6
+    set #upperborder 10
+end_if
+
+
+while 1 = 1
+       for #i #bottomborder #upperborder 1
+           set #runAway 0 // It's ok, we going to recal as soon as possible
+           set #runOutWght 0
+           send %runes[ #i ] $wait_book_recall
+           while ( (lastmsg fizzles) or (mana = int) )
+                 send %runes[ #i ] $wait_book_recall
+           end_while
+           gosub meditation
+           if ( #runAway = 1)
+              goto next_rune                  //very agly ^( analog "continue"
+           end_if
+           set #j 1
+           set $var %nextX[ #i #j ]
+           while $var <> stop
+               gosub reflection_timer
+               set #dest_x %nextX[#i #j]
+               set #dest_y %nextY[#i #j]
+               gosub walk_to
+               gosub digging
+               if ( (#runAway = 1) or (#runOutWght = 1))
+                    break
+               end_if
+               set #j #j + 1
+               set $var %nextX[ #i #j ]
+           end_while
+           :next_rune
+           gosub to_base
+       end_for
+end_while   
+end_script
+
+// set #dest_x
+// set #dest_y
+:walk_to
+    while (charposx <> #dest_x)
+        if (charposx > #dest_x)
+            send $step_west
+        else
+            send $step_east
+        end_if
+    end_while
+    while (charposy <> #dest_y)
+        if (charposy > #dest_y)
+            send $step_north 
+        else
+            send $step_south
+        end_if
+    end_while
+return
+
+:digging
+     send $digging 200
+     while_not ( ( lastmsg try digging) or ( lastmsg too far away) or ( lastmsg no ore) or ( lastmsg in rock) or ( lastmsg no line))
+         gosub tracking
+         if ( #runAway = 1)
+            break
+         end_if
+         send $digging 250
+         if_not ( ( lastmsg try) or ( lastmsg too far away) or ( lastmsg left here) or ( lastmsg must wait) or ( lastmsg want to use) )
+             //alarm
+         end_if
+         if ( ( (str = 100) and (wght > 420) ) or ( (str = 250) and (wght > 1000) ) )
+             set #runOutWght 1
+             break
+         end_if
+     end_while
+return
+
+:meditation
+       while mana < int 
+             gosub tracking
+             if ( #runAway = 1)
+                break
+             end_if
+             send $meditation $wait_meditation
+       end_while
+return
+
+:reflection_timer
+       if timer > $reflaction_duration
+          gosub reflection
+       end_if
+return
+
+:reflection
+    send $reflection $wait_book_reflacrion
+    while ( (lastmsg fizzles) or (mana = int) )
+          send $reflection $wait_book_reflacrion
+    end_while 
+    set timer 0
+    gosub meditation
+return
+
+:polimorph
+    send $polimorph $wait_book_polimorph
+    while ( lastmsg fizzles) 
+        while mana < int 
+             send $meditation $wait_meditation
+        end_while
+        send $polimorph $wait_book_polimorph
+    end_while
+return
+
+:tracking
+    send $tracking
+    send $tracking
+    while_not ((lastmsg no signs) or (lastmsg targeting cancelled) )
+        send $tracking 200
+    end_while
+    if_not (lastmsg no signs)
+        set #runAway 1
+    end_if
+return
+
+:to_base
+     if #YOU_SEE.1 = 1
+        send $scroll_to_home $wait_scroll_recall
+    end_if
+    if ((wght > 60) or (#starting = 1)) 
+        while ( (charposx <> #base_x) and (charposy <> #base_y) )
+            send $rune_to_home $wait_book_recall
+        end_while
+        set #starting 0
+        pause_script 1
+        while_not lastmsg brass sign
+        end_while
+        resume_script 1
+        gosub polimorph
+        gosub reflection
+        while mana < int 
+             send $meditation $wait_meditation
+        end_while
+    end_if
+return

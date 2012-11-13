@@ -36,7 +36,7 @@ set $cast_protection_self e
 set $cast_bless_wepon f4
 set $drink_strength_potion t
 
-set #lower_hits_treashold 71
+set #lower_hits_treashold 81
 
 while 1 = 1
 
