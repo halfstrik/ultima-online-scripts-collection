@@ -233,10 +233,14 @@ while 1 = 1
   for #i #bottomborder #upperborder 1
     set #runAway 0 // It's ok, we going to recal as soon as possible
     set #runOutWght 0
-    send %runes[ #i ] $wait_book_recall
-    while ( (lastmsg fizzles) or (mana = int) )
-      send %runes[ #i ] $wait_book_recall
+    send %runes[ #i ] 100
+    set timer
+    while_not (lastmsg feel yourself resisting) or (timer > $wait_book_recall)
     end_while
+    if lastmsg feel yourself resisting
+      send $scroll_to_home $wait_scroll_recall
+      set #runAway 1
+    end_if
     gosub meditation
     if ( #runAway = 1)
       goto next_rune                  //very agly ^( analog "continue"
