@@ -217,152 +217,149 @@ set %nextX [ 10 9 ] 1365
 set %nextY [ 10 9 ] 2710
 set %nextX [ 10 10 ] stop
 
-start_script 1
-set #starting 1
 gosub to_base
 
 if name = Feather
-    set #bottomborder 1
-    set #upperborder 5
+  set #bottomborder 1
+  set #upperborder 5
 end_if
 if name = Sandra
-    set #bottomborder 6
-    set #upperborder 10
+  set #bottomborder 6
+  set #upperborder 10
 end_if
 
 
 while 1 = 1
-       for #i #bottomborder #upperborder 1
-           set #runAway 0 // It's ok, we going to recal as soon as possible
-           set #runOutWght 0
-           send %runes[ #i ] $wait_book_recall
-           while ( (lastmsg fizzles) or (mana = int) )
-                 send %runes[ #i ] $wait_book_recall
-           end_while
-           gosub meditation
-           if ( #runAway = 1)
-              goto next_rune                  //very agly ^( analog "continue"
-           end_if
-           set #j 1
-           set $var %nextX[ #i #j ]
-           while $var <> stop
-               gosub reflection_timer
-               set #dest_x %nextX[#i #j]
-               set #dest_y %nextY[#i #j]
-               gosub walk_to
-               gosub digging
-               if ( (#runAway = 1) or (#runOutWght = 1))
-                    break
-               end_if
-               set #j #j + 1
-               set $var %nextX[ #i #j ]
-           end_while
-           :next_rune
-           gosub to_base
-       end_for
+  for #i #bottomborder #upperborder 1
+    set #runAway 0 // It's ok, we going to recal as soon as possible
+    set #runOutWght 0
+    send %runes[ #i ] $wait_book_recall
+    while ( (lastmsg fizzles) or (mana = int) )
+      send %runes[ #i ] $wait_book_recall
+    end_while
+    gosub meditation
+    if ( #runAway = 1)
+      goto next_rune                  //very agly ^( analog "continue"
+    end_if
+    set #j 1
+    set $var %nextX[ #i #j ]
+    while $var <> stop
+      gosub reflection_timer
+      set #dest_x %nextX[#i #j]
+      set #dest_y %nextY[#i #j]
+      gosub walk_to
+      gosub digging
+      if ( (#runAway = 1) or (#runOutWght = 1))
+        break
+      end_if
+      set #j #j + 1
+      set $var %nextX[ #i #j ]
+    end_while
+    :next_rune
+    gosub to_base
+  end_for
 end_while   
 end_script
 
 // set #dest_x
 // set #dest_y
 :walk_to
-    while (charposx <> #dest_x)
-        if (charposx > #dest_x)
-            send $step_west
-        else
-            send $step_east
-        end_if
-    end_while
-    while (charposy <> #dest_y)
-        if (charposy > #dest_y)
-            send $step_north 
-        else
-            send $step_south
-        end_if
-    end_while
+  while (charposx <> #dest_x)
+    if (charposx > #dest_x)
+      send $step_west
+    else
+      send $step_east
+    end_if
+  end_while
+  while (charposy <> #dest_y)
+    if (charposy > #dest_y)
+      send $step_north 
+    else
+      send $step_south
+    end_if
+  end_while
 return
 
 :digging
-     send $digging 200
-     while_not ( ( lastmsg try digging) or ( lastmsg too far away) or ( lastmsg no ore) or ( lastmsg in rock) or ( lastmsg no line))
-         gosub tracking
-         if ( #runAway = 1)
-            break
-         end_if
-         send $digging 250
-         if_not ( ( lastmsg try) or ( lastmsg too far away) or ( lastmsg left here) or ( lastmsg must wait) or ( lastmsg want to use) )
-             //alarm
-         end_if
-         if ( ( (str = 100) and (wght > 420) ) or ( (str = 250) and (wght > 1000) ) )
-             set #runOutWght 1
-             break
-         end_if
-     end_while
+  send $digging 200
+  while_not ( ( lastmsg try digging) or ( lastmsg too far away) or ( lastmsg no ore) or ( lastmsg in rock) or ( lastmsg no line))
+    gosub tracking
+    if ( #runAway = 1)
+      break
+    end_if
+    send $digging 250
+    if_not ( ( lastmsg try) or ( lastmsg too far away) or ( lastmsg left here) or ( lastmsg must wait) or ( lastmsg want to use) )
+      //alarm
+    end_if
+    if ( ( (str = 100) and (wght > 420) ) or ( (str = 250) and (wght > 1000) ) )
+      set #runOutWght 1
+      break
+    end_if
+  end_while
 return
 
 :meditation
-       while mana < int 
-             gosub tracking
-             if ( #runAway = 1)
-                break
-             end_if
-             send $meditation $wait_meditation
-       end_while
+  while mana < int 
+    gosub tracking
+    if ( #runAway = 1)
+      break
+    end_if
+    send $meditation $wait_meditation
+  end_while
 return
 
 :reflection_timer
-       if timer > $reflaction_duration
-          gosub reflection
-       end_if
+  if timer > $reflaction_duration
+    gosub reflection
+  end_if
 return
 
 :reflection
+  send $reflection $wait_book_reflacrion
+  while ( (lastmsg fizzles) or (mana = int) )
     send $reflection $wait_book_reflacrion
-    while ( (lastmsg fizzles) or (mana = int) )
-          send $reflection $wait_book_reflacrion
-    end_while 
-    set timer 0
-    gosub meditation
+  end_while 
+  set timer 0
+  gosub meditation
 return
 
 :polimorph
-    send $polimorph $wait_book_polimorph
-    while ( lastmsg fizzles) 
-        while mana < int 
-             send $meditation $wait_meditation
-        end_while
-        send $polimorph $wait_book_polimorph
+  send $polimorph $wait_book_polimorph
+  while ( lastmsg fizzles) 
+    while mana < int 
+      send $meditation $wait_meditation
     end_while
+    send $polimorph $wait_book_polimorph
+  end_while
 return
 
 :tracking
-    send $tracking
-    send $tracking
-    while_not ((lastmsg no signs) or (lastmsg targeting cancelled) )
-        send $tracking 200
-    end_while
-    if_not (lastmsg no signs)
-        set #runAway 1
-    end_if
+  send $tracking
+  send $tracking
+  while_not ((lastmsg no signs) or (lastmsg targeting cancelled) )
+    send $tracking 200
+  end_while
+  if_not (lastmsg no signs)
+    set #runAway 1
+  end_if
 return
 
 :to_base
-     if #YOU_SEE.1 = 1
-        send $scroll_to_home $wait_scroll_recall
-    end_if
-    if ((wght > 60) or (#starting = 1)) 
-        while ( (charposx <> #base_x) and (charposy <> #base_y) )
-            send $rune_to_home $wait_book_recall
-        end_while
-        set #starting 0
-        pause_script 1
-        while_not lastmsg brass sign
-        end_while
-        resume_script 1
-        gosub polimorph
-        gosub reflection
-        while mana < int 
-             send $meditation $wait_meditation
-        end_while
-    end_if
+  if #YOU_SEE.1 = 1
+    send $scroll_to_home $wait_scroll_recall
+  end_if
+
+  while ( (charposx <> #base_x) and (charposy <> #base_y) )
+    send $rune_to_home $wait_book_recall
+  end_while
+
+  stop_script 1
+  while_not lastmsg brass sign
+  end_while
+  start_script 1
+  gosub polimorph
+  gosub reflection
+  while mana < int 
+    send $meditation $wait_meditation
+  end_while
 return
