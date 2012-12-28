@@ -1,0 +1,31 @@
+set %actions [1] "NONE"
+set %actions [2 1] "BAND"
+set %actions [2 2] 2700
+
+set #current 1
+set #next 1
+set timer
+
+set #currentView 0
+set #nextView 0
+
+while 1 = 1 
+  gosub updateView
+  gosub resetCurrentIfTimesUp    
+end_while
+
+:updateView
+  if #currentView != #current or #nextView != #next
+    set #currentView #current
+    set #nextView #next
+    hint (8 0 100 630 (now %actions [#currentView 1] nxt %actions [#nextView 1]))
+  end_if
+return
+
+:resetCurrentIfTimesUp
+  if_not #current = 1
+    if timer > %actions [#current 2]
+      set #current 1
+    end_if
+  end_if
+return

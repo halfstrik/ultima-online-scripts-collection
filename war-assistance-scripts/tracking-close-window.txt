@@ -1,0 +1,4 @@
+while (240, 23 9208452 ) and (274, 38 5384241 )
+   Right 250, 58 
+end_while
+end_script

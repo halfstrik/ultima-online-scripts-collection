@@ -1,8 +1,8 @@
 If ((lastmsg energy) or (lastmsg attack) or (lastmsg gm) or (lastmsg you see:) or (lastmsg magic field))
     set #YOU_SEE 1
    // say a guards
-    alarm
-    alarm
+    //alarm
+    //alarm
     wait 3000
     //say a guards
     set #YOU_SEE 0

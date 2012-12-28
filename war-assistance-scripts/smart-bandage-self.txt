@@ -1,0 +1,20 @@
+set #numbInActions 2
+if #current.#ctrlScript = 1
+  :act
+  sendex ^@~{Q}
+  wait 78
+  if lastmsg <= mymmy
+    end_script
+  end_if
+  set #current.0 #numbInActions
+  set timer.0
+  end_script
+else
+  set #next.0 #numbInActions
+  while_not #current.0 = 1
+  end_while
+  if #next.0 = #numbInActions
+     goto act
+  end_if 
+end_if
+end_script

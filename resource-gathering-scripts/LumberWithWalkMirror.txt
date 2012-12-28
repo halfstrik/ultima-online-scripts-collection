@@ -1,0 +1,169 @@
+// runes builds to jump on
+set %runes[ 1 ] r
+set %runes[ 2 ] t
+set %runes[ 3 ] y
+set %runes[ 4 ] u
+set %runes[ 5 ] i
+set %runes[ 6 ] o
+set %runes[ 7 ] p
+set %runes[ 8 ] f
+set %runes[ 9 ] g
+set %runes[ 10 ] h
+set %runes[ 11 ] j
+set %runes[ 12 ] k
+set %runes[ 13 ] l
+set %runes[ 14 ] x
+set %runes[ 15 ] c
+set %runes[ 16 ] v
+set %runes[ 17 ] b
+set %runes[ 18 ] n
+set %runes[ 19 ] 1
+set %runes[ 20 ] 2
+set %runes[ 21 ] 3
+set %runes[ 22 ] 4
+set %runes[ 23 ] 5
+set %runes[ 24 ] 6
+set %runes[ 25 ] 7
+set %runes[ 26 ] 8
+set %runes[ 27 ] 9
+set %runes[ 28 ] 0
+set %runes[ 29 ] f3
+set %runes[ 30 ] f4
+
+set $lumbAround q //lumber builds to q
+
+set $tracking z // - use tracking players
+set $meditation f12
+set $reflection f11
+set $step_south a  // ++y
+set $rune_home s // s - rune to home
+set $scroll_home d // d - scroll to home
+
+set $wait_scroll_recall 2000
+
+set $wait_book_recall 3200
+set $wait_book_reflacrion 3600
+
+set $reflaction_duration 150000 //approximate mirror duration
+
+set $wait_meditation 2200 
+
+set #critical_wght 400 // weight when return
+
+set #base_x 3201 //base rune coordinates
+set #base_y 239
+
+
+gosub mirror
+start_script 1
+repeat 20
+       for #i 1 30 1
+           set #runAway 0 // It's ok, we going to recal as soon as possible
+           send %runes[ #i ] $wait_book_recall
+           while ( (lastmsg fizzles) or (mana = int) )
+                 send %runes[ #i ] $wait_book_recall
+           end_while
+           gosub meditation
+           if ( #runAway = 1)
+              goto next_rune                  //very agly ^( analog "continue"
+           end_if
+           gosub mirror_timer
+           set #follow_success 0
+           while_not ( (#runAway = 1) or (#follow_success = 2) )
+               gosub lumbering
+               if ( #runAway = 1)
+                  break
+               end_if
+               gosub follow_left_down
+           end_while
+           :next_rune
+           gosub to_base_withdrow
+       end_for
+end_repeat
+
+:meditation
+       while mana < int 
+             gosub tracking
+             if ( #runAway = 1)
+                break
+             end_if
+             send $meditation $wait_meditation
+       end_while
+return
+
+:mirror_timer
+       if timer > $reflaction_duration
+          gosub mirror
+          set timer 0
+       end_if
+return
+
+:mirror
+    send $reflection $wait_book_reflacrion
+    while ( (lastmsg fizzles) or (mana = int) )
+          send $reflection $wait_book_reflacrion
+    end_while 
+    gosub meditation
+return
+
+:tracking
+    send $tracking
+    send $tracking
+    while_not ((lastmsg no signs) or (lastmsg targeting cancelled) )
+        send $tracking 200
+    end_while
+    if_not (lastmsg no signs)
+        set #runAway 1
+    end_if
+return
+
+:lumbering
+     send $lumbAround 200
+     while_not ( ( lastmsg try chopping) or ( lastmsg too far away) or ( lastmsg left here) )
+         gosub tracking
+         if ( #runAway = 1)
+            break
+         end_if
+         send $lumbAround 200
+         if_not ( ( lastmsg try) or ( lastmsg too far away) or ( lastmsg left here) or ( lastmsg must wait) or ( lastmsg want to use) )
+             alarm
+         end_if
+     end_while
+return
+
+:follow_left_down
+    set #lastX CharPosX
+    set #lastY CharPosY
+    set #follow_success 0
+    repeat 5
+        send $step_south 100
+        if  ( ( #lastX = CharPosX ) and ( #lastY < CharPosY ) )
+            set #follow_success 1
+            break
+        end_if 
+    end_repeat
+    if_not #follow_success = 1
+        set #follow_success 2
+        gosub mirror_timer
+    end_if
+return
+
+:to_base_withdrow
+    if #YOU_SEE.1 = 1
+        send $scroll_home $wait_scroll_recall
+    end_if
+    if wght > #critical_wght
+        while ( (charposx <> #base_x) and (charposy <> #base_y) )
+            send $rune_home $wait_book_recall
+        end_while
+             //exec cmd.exe /c "C:\Users\Strikki\Documents\Games\Lumber scripts\dragLogs.skl"
+        pause_script 1
+        while_not lastmsg brass sign
+        end_while
+        resume_script 1
+        gosub mirror
+        while mana < int 
+             send $meditation $wait_meditation
+        end_while
+    end_if
+return

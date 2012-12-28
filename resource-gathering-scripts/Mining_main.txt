@@ -219,13 +219,15 @@ set %nextX [ 10 10 ] stop
 
 gosub to_base
 
-if name = Feather
-  set #bottomborder 1
-  set #upperborder 5
-end_if
+
 if name = Sandra
-  set #bottomborder 6
+  set #bottomborder 1
   set #upperborder 10
+end_if
+
+if name = Feather
+  set #bottomborder 0
+  set #upperborder 0
 end_if
 
 
@@ -268,24 +270,30 @@ end_script
 // set #dest_x
 // set #dest_y
 :walk_to
-  while (charposx <> #dest_x)
+  set #turns 0
+  while (charposx <> #dest_x) and (#turns < 50)
     if (charposx > #dest_x)
       send $step_west
     else
       send $step_east
     end_if
+    set #turns #turns + 1
   end_while
-  while (charposy <> #dest_y)
+  while (charposy <> #dest_y) and (#turns < 50)
     if (charposy > #dest_y)
       send $step_north 
     else
       send $step_south
     end_if
+     set #turns #turns + 1
   end_while
+  if  (charposx <> #dest_x) or (charposy <> #dest_y) 
+    set #runAway 1
+  end_if
 return
 
 :digging
-  send $digging 200
+  send $digging 250
   while_not ( ( lastmsg try digging) or ( lastmsg too far away) or ( lastmsg no ore) or ( lastmsg in rock) or ( lastmsg no line))
     gosub tracking
     if ( #runAway = 1)

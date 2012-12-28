@@ -1,0 +1,11 @@
+hint (8 0 0 630 (Auto tracking is on))
+send f2 100
+if (240, 23 9208452 ) and (274, 38 5384241 )
+   hint (8 255 0 630 (We found a player!))
+   alarm
+   end_script 
+end_if
+repeat 2
+   hint (8 0 0 630 (Auto tracking is on))
+   wait 3000
+end_repeat

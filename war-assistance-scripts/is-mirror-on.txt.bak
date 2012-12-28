@@ -1,0 +1,33 @@
+set $mirrorBrockenMsg "You feel yourself resisting magic"
+set $mirrorWords "Feather: In Jux Sanct "
+set $spellFizzleMsg "The spell fizzles."
+
+while 1 = 1
+  set $lastMess lastmsg
+  if $lastMess = $mirrorWords 
+     gosub castProcess
+  end_if
+  if $lastMess = $mirrorBrockenMsg
+     set #mirrorTime 0
+  end_if
+  if timer < #mirrorTime
+     set #secondsLeft (#mirrorTime - timer)/1000
+     hint (8 0 0 648 (Mirror ON #secondsLeft))
+  else
+     hint (8 0 0 648 (Mirror OFF))
+  end_if
+end_while
+
+:castProcess
+  set timer
+  send f2
+  while timer < 2000 or $lastMess = $spellFizzleMsg
+     set $lastMess lastmsg
+  end_while
+  if timer > 1999
+     set #mirrorTime 180000
+     set timer
+  else
+     set #mirrorTime 0
+  end_if
+return
